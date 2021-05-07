@@ -1,4 +1,5 @@
 import express from 'express';
+import TeamController from '../controllers/TeamController.js';
 import DadosHLTV from '../dadosHLTV.js';
 
 const teamRouter = express.Router();
@@ -6,27 +7,26 @@ const teamRouter = express.Router();
 let dadosHLTV = new DadosHLTV();
 
 teamRouter.get('/', async (req, res) => {
-  res.send(await dadosHLTV.getTeamRanking());
+  let data = await new TeamController().getTeamRanking();
+  res.send(data);
 });
 
 teamRouter.get('/:id?', async (req, res) => {
-  res.send(await dadosHLTV.getTeam(req.params.id));
+  let data = await new TeamController().getTeam(req.params.id);
+  res.send(data);
+});
+
+teamRouter.get('/card/:id?', async (req, res) => {
+  let data = await new TeamController().getTeamCard(req.params.id);
+  res.send(data);
 });
 
 teamRouter.get('/name/:name', async (req, res) => {
   res.send(await dadosHLTV.getTeamByName(req.params.name));
 });
 
-teamRouter.get('/team/:id', async (req, res) => {
+teamRouter.get('/stats/:id', async (req, res) => {
   res.send(await dadosHLTV.getTeamStats(req.params.id));
-});
-
-teamRouter.get('/matchmapstats/:id', async (req, res) => {
-  res.send(await dadosHLTV.getMatchMapStats(req.params.id));
-});
-
-teamRouter.get('/streams/', async (req, res) => {
-  res.send(await dadosHLTV.getStreams());
 });
 
 export default teamRouter;

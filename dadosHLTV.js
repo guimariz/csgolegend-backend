@@ -21,9 +21,12 @@ export default class DadosHLTV {
     }
   }
 
-  async getMatchesStats() {
+  async getMatchesStats(start, end) {
     try {
-      const data = HLTV.getMatchesStats();
+      const data = HLTV.getMatchesStats({
+        startDate: `${start}`,
+        endDate: `${end}`,
+      });
       return data;
     } catch (error) {
       console.log(error);

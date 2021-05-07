@@ -4,8 +4,11 @@ import teamRouter from './routes/teamRouter.js';
 import playerRouter from './routes/playerRouter.js';
 import eventRouter from './routes/eventRouter.js';
 import DadosHLTV from './dadosHLTV.js';
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 app.use('/match', matchRouter);
@@ -19,12 +22,22 @@ const url = `http://${host}:${port}`;
 
 let dadosHLTV = new DadosHLTV();
 
+let data = new Date(1617332400000);
+
 app.get('/recent', async (req, res) => {
   res.send(await dadosHLTV.getRecentThreads());
 });
 
-app.get('/getNews', async (req, res) => {
-  res.send(await dadosHLTV.getRecentThreads());
+app.get('/news', async (req, res) => {
+  res.send(await dadosHLTV.getNews());
+});
+
+app.get('/streams', async (req, res) => {
+  res.send(await dadosHLTV.getStreams());
+});
+
+app.get('/teste', (req, res) => {
+  res.send(data);
 });
 
 app.listen(port, () => {
