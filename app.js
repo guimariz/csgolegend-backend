@@ -1,8 +1,11 @@
 import express from 'express';
+import bodyParser from 'body-parser';
+
 import matchRouter from './routes/matchRouter.js';
 import teamRouter from './routes/teamRouter.js';
 import playerRouter from './routes/playerRouter.js';
 import eventRouter from './routes/eventRouter.js';
+import authRouter from './routes/AuthRouter.js';
 import DadosHLTV from './dadosHLTV.js';
 import cors from 'cors';
 
@@ -10,7 +13,10 @@ const app = express();
 
 app.use(cors());
 
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use('/auth', authRouter);
 app.use('/match', matchRouter);
 app.use('/team', teamRouter);
 app.use('/player', playerRouter);

@@ -5,8 +5,6 @@ export default class EventController {
 
   constructor() {}
 
-  listar() {}
-
   async getEvents() {
     return await this.dadosHLTV.getEvents();
   }
